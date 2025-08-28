@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Regeal Princeton Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --brand:#0a3a82;
+      --brandDark:#072a5f;
+      --accent:#ffcc00;
+      --text:#222;
+      --muted:#666;
+      --bg:#f7f9fc;
+      --white:#fff;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Poppins,system-ui,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+
+    /* header nav */
+    .opbar{
+      background:var(--brandDark);
+      color:var(--white);
+      font-size:.9rem;
+      padding:.5rem 1rem;
+      display:flex;
+      justify-content:center;
+      gap:1rem;
+    }
+    .topbar a{color:var(--white);text-decoration:none;opacity:.9}
+    .navbar{
+      position:sticky;top:0;z-index:50;
+      background:var(--brand);
+      box-shadow:var(--shadow);
+    }
+    .nav-inner{
+      max-width:1200px;margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.8rem 1rem; transition:padding .25s ease;
+    }
+    .nav-shrink .nav-inner{padding:.4rem 1rem}
+    .brand{
+      display:flex;align-items:center;gap:.6rem;color:var(--white);text-decoration:none;
+    }
+    .brand img{height:44px;width:44px;object-fit:cover;border-radius:50%;background:#eee}
+    .brand span{font-weight:700;font-size:1.05rem;letter-spacing:.3px}
+    .nav-links{
+      display:flex;align-items:center;gap:1.2rem;
+    }
+    .nav-links a{
+      color:var(--white);text-decoration:none;font-weight:600;opacity:.95;
+    }
+    .nav-links a:hover{color:var(--accent)}
+    .cta-btn{
+      background:var(--accent);color:#111;font-weight:700;
+      padding:.6rem 1rem;border-radius:999px;text-decoration:none;display:inline-block;
+    }
+    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
+    .hamburger span{width:26px;height:3px;background:var(--white);border-radius:4px;transition:.25s}
+    .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.active span:nth-child(2){opacity:0}
+    .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    @media(max-width:900px){
+      .nav-links{display:none;position:absolute;left:0;right:0;top:100%;background:var(--brand);flex-direction:column;padding:1rem;border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius)}
+      .nav-links.show{display:flex}
+      .hamburger{display:flex}
+    }
+
+    /* hero slider */
+    .hero{position:relative;overflow:hidden}
+    .slides{position:relative;height:66vh;min-height:440px}
+    .slide{
+      position:absolute;inset:0;background-size:cover;background-position:center;
+      transform:scale(1.02);opacity:0;transition:opacity .8s ease;
+    }
+    .slide.active{opacity:1}
+    .hero-overlay{
+      position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.35));
+    }
+    .hero-content{
+      position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--white);padding:1rem;
+    }
+    .hero h1{font-size:clamp(1.8rem,4vw,3rem);margin:.2rem 0}
+    .hero p{max-width:800px;margin:.2rem auto 1rem;opacity:.95}
+    .hero-cta{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+    .hero-cta a{border:2px solid var(--white);padding:.55rem 1rem;border-radius:999px;text-decoration:none;color:var(--white);font-weight:700}
+    .hero-cta a.primary{background:var(--accent);border-color:var(--accent);color:#111}
+
+    /* stats band */
+    .stats{
+      background:var(--white);box-shadow:var(--shadow);border-radius:var(--radius);
+      max-width:1100px;margin:-40px auto 30px;padding:1rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+    }
+    .stat{text-align:center}
+    .stat b{display:block;font-size:1.6rem}
+    .stat small{color:var(--muted)}
+    @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+    /* sections */
+    section{max-width:1200px;margin:40px auto;padding:0 1rem}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    @media(max-width:900px){.grid-3{grid-template-columns:1fr}}
+    .card{
+      background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    }
+    .card .picture{height:220px;background-size:cover;background-position:center}
+    .card .content{padding:1rem}
+    .card h3{margin:.2rem 0}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+
+    /* campuses carousel lite */
+    .campuses{overflow:auto;display:flex;gap:1rem;padding-bottom:.5rem}
+    .campus{
+      min-width:280px;background:var(--white);box-shadow:var(--shadow);border-radius:var(--radius);overflow:hidden;
+    }
+    .campus .picture{height:150px;background-size:cover;background-position:center}
+    .campus .content{padding:.8rem}
+
+    /* testimonials */
+    .testi{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+    }
+    @media(max-width:900px){.testi{grid-template-columns:1fr}}
+    .quote{background:var(--white);padding:1rem;border-radius:var(--radius);box-shadow:var(--shadow);font-style:italic}
+    .quote b{display:block;margin-top:.6rem;font-style:normal}
+
+    /* contact */
+    .contact-wrap{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:1rem;
+    }
+    @media(max-width:900px){.contact-wrap{grid-template-columns:1fr}}
+    form{
+      background:var(--white);padding:1rem;border-radius:var(--radius);box-shadow:var(--shadow);
+      display:grid;gap:.7rem;
+    }
+    input,textarea,select{
+      width:100%;padding:.8rem;border:1px solid #e5e7eb;border-radius:10px;font:inherit;background:#fff;
+    }
+    button{
+      padding:.8rem 1rem;border:none;border-radius:999px;background:var(--brand);color:#fff;font-weight:700;cursor:pointer;
+    }
+    button:hover{background:var(--brandDark)}
+
+    /* footer */
+    footer{
+      background:var(--brandDark);color:#cdd9ff;margin-top:40px;
+    }
+    .foot{
+      max-width:1200px;margin:0 auto;padding:40px 1rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:1rem;
+    }
+    @media(max-width:900px){.foot{grid-template-columns:1fr}}
+    .foot a{color:#cdd9ff;text-decoration:none}
+    .subfoot{border-top:1px solid rgba(255,255,255,.15);padding:12px 1rem;text-align:center}
+    .badge{display:inline-block;background:#e8f0ff;color:#0d2c6d;padding:.2rem .5rem;border-radius:999px;font-size:.85rem;font-weight:700}
+  </style>
+</head>
+<body>
+
+  <!-- top info -->
+  
+
+  <!-- nav -->
+  <div class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="#home">
+        <img src="../logo.jpg" alt="RPA logo" />
+        <span>Regeal Princeton Academy</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#discover">Discover RPA</a>
+        <a href="#academics">Academics</a>
+       <!--<a href="#campuses">Campuses</a> --> 
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="https://dlhsportal.org/" target="_blank" rel="noopener" class="cta-btn">Portal</a>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- hero slider -->
+  <section class="hero" id="home">
+    <div class="slides" id="slides">
+      <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1605649487212-47bdab064df3?q=80&w=1600&auto=format&fit=crop');"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1523246191540-91ea6b25956e?q=80&w=1600&auto=format&fit=crop');"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=1600&auto=format&fit=crop');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div>
+          <h1>Home of quality and sound education</h1>
+          <p>Where character leadership and scholarship grow together under caring mentorship</p>
+          <div class="hero-cta">
+            <a class="primary" href="#admissions">Apply now</a>
+            <a href="#discover">Discover RPA</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- stats -->
+  <div class="stats">
+    <div class="stat"><b>23</b><small>Campuses nationwide</small></div>
+    <div class="stat"><b>10k+</b><small>Alumni worldwide</small></div>
+    <div class="stat"><b>100%</b><small>Zero exam malpractice policy</small></div>
+    <div class="stat"><b>2010</b><small>Legacy of excellence</small></div>
+  </div>
+
+  <!-- discover cards -->
+  <section id="discover">
+    <div class="center">
+      <h2>Discover RPA</h2>
+      <p class="muted">Strong academics pastoral care co curricular excellence</p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1519455953755-af066f52f1ea?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Our mission</h3>
+          <p>Raising future ready leaders through disciplined learning moral guidance and innovation</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Why choose us</h3>
+          <p>Safe boarding caring staff modern labs rich library vibrant clubs and sports</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Faith and character</h3>
+          <p>We nurture integrity service and leadership alongside academic excellence</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- academics highlight -->
+  <section id="academics">
+    <div class="center">
+      <h2>Academics</h2>
+      <p class="muted">Balanced curriculum strong STEM humanities arts and life skills</p>
+    </div>
+    <div class="grid-4">
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1584697964159-c4c3b4c9a049?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Nursery Section</h3>
+          <p>Foundational mastery with supportive guidance and assessment</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Primary Section</h3>
+          <p>Exam readiness leadership development and career counseling</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1513258496099-7a46d19cd819?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Junior Secondary</h3>
+          <p>STEM clubs arts sports community service entrepreneurship</p>
+        </div>
+        
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1513258496099-7a46d19cd819?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Junior Secondary</h3>
+          <p>STEM clubs arts sports community service entrepreneurship</p>
+        </div>
+    </article>
+
+    </div>
+  </section>
+
+  <!-- campuses 
+  <section id="campuses">
+    <div class="center">
+      <h2>Our campuses</h2>
+      <p class="muted">One school in many locations for families across the nation</p>
+    </div>
+    <div class="campuses">
+      <div class="campus">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1596495578065-8a4a1a4a7f88?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content"><h3>Lagos</h3><p class="muted">Km 42 Lagos Ibadan Expressway</p></div>
+      </div>
+      <div class="campus">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1541336032412-2048a678540d?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content"><h3>Abuja</h3><p class="muted">High growth learning community</p></div>
+      </div>
+      <div class="campus">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content"><h3>Port Harcourt</h3><p class="muted">Boarding and day options</p></div>
+      </div>
+      <div class="campus">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content"><h3>Umuahia</h3><p class="muted">Your local RPA family</p></div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- admissions callout -->
+  <section id="admissions">
+    <div class="card" style="display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;align-items:center;padding:1rem">
+      <div class="content">
+        <h2>Admissions 2025 now open</h2>
+        <p class="muted">Apply for JSS one and transfer entry. Entrance exams hold in all campuses. Please contact the campus nearest to you for dates and requirements</p>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <a class="cta-btn" href="#contact">Start application</a>
+          <a class="cta-btn" style="background:transparent;border:2px solid var(--accent);color:var(--accent)" href="#faq">Download prospectus</a>
+        </div>
+      </div>
+      <div class="picture" style="height:220px;border-radius:var(--radius);background-size:cover;background-position:center;background-image:url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=1200&auto=format&fit=crop')"></div>
+    </div>
+  </section>
+
+  <!-- news -->
+  <section id="news">
+    <div class="center"><h2>News and updates</h2></div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Entrance exam April session</h3>
+          <p class="muted">Nationwide exam schedule now available. Check your local campus for details</p>
+          <a href="#" class="cta-btn">Read more</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>STEM fair highlights</h3>
+          <p class="muted">Robotics coding and clean energy projects from our students</p>
+          <a href="#" class="cta-btn">Read more</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="picture" style="background-image:url('https://images.unsplash.com/photo-1477281765962-ef34e8bb0967?q=80&w=1200&auto=format&fit=crop')"></div>
+        <div class="content">
+          <h3>Alumni spotlight</h3>
+          <p class="muted">Celebrating alumni achievements in universities and industry</p>
+          <a href="#" class="cta-btn">Read more</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- testimonials -->
+  <section id="testimonials">
+    <div class="center"><h2>What parents say</h2></div>
+    <div class="testi">
+      <div class="quote">My child grew in confidence and character within a term<b>Mrs Okoro Parent</b></div>
+      <div class="quote">Teachers are attentive and firm in the best way<b>Mr Adewale Parent</b></div>
+      <div class="quote">The boarding community feels like home<b>Mrs Daniel Parent</b></div>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section id="contact">
+    <div class="center"><h2>Contact us</h2></div>
+    <div class="contact-wrap">
+      <form id="contactForm" action="https://formspree.io/f/xovnqvqn" method="POST">
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
+        <select name="campus">
+          <option value="">Select preferred campus</option>
+          <option>Lagos</option><option>Abuja</option><option>Port Harcourt</option><option>Umuahia</option>
+        </select>
+        <textarea name="message" rows="5" placeholder="Your message" required></textarea>
+        <button type="submit">Send message</button>
+        <input type="hidden" name="_subject" value="New website enquiry" />
+      </form>
+      <div class="card" style="padding:1rem">
+        <h3>Head office</h3>
+        <p class="muted">Km 42 Lagos Ibadan Expressway</p>
+        <p>Phone  234 806 548 2556</p>
+        <p>Mail  info@regealprincetonacademy.com</p>
+        <div style="height:220px;border-radius:var(--radius);overflow:hidden;margin-top:.6rem">
+          <iframe title="map" width="100%" height="220" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Lagos%20Nigeria&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer>
+    <div class="foot">
+      <div>
+        <a class="brand" href="#home" style="margin-bottom:.6rem;display:inline-flex"><img src="../logo.jpg" alt="RPA" /><span>Regeal Princeton Academy</span></a>
+        <p class="muted">Excellence discipline innovation</p>
+      </div>
+      <div>
+        <h4 style="margin:.2rem 0  .4rem">Discover</h4>
+        <div style="display:grid;gap:.3rem">
+          <a href="#discover">About RPA</a>
+          <a href="#academics">Academics</a>
+          <a href="#campuses">Campuses</a>
+          <a href="#news">News</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin:.2rem 0  .4rem">Admissions</h4>
+        <div style="display:grid;gap:.3rem">
+          <a href="#admissions">Apply</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="margin:.2rem 0  .4rem">Portal</h4>
+        <div style="display:grid;gap:.3rem">
+          <a href="https://dlhsportal.org/" target="_blank" rel="noopener">Results portal</a>
+          <a href="#news">Announcements</a>
+        </div>
+      </div>
+    </div>
+    <div class="subfoot">
+      <small>Copyright  2025 Regeal Princeton Academy  All rights reserved</small>
+    </div>
+  </footer>
+
+  <div id="toast" style="position:fixed;right:16px;top:16px;display:none;background:#28a745;color:#fff;padding:.7rem 1rem;border-radius:10px;box-shadow:var(--shadow);font-weight:700">Message sent successfully</div>
+  <div id="toastErr" style="position:fixed;right:16px;top:16px;display:none;background:#dc3545;color:#fff;padding:.7rem 1rem;border-radius:10px;box-shadow:var(--shadow);font-weight:700">Something went wrong</div>
+
+  <script>
+    // nav behavior
+    const navbar=document.getElementById('navbar');
+    const navLinks=document.getElementById('navLinks');
+    const burger=document.getElementById('hamburger');
+    window.addEventListener('scroll',()=>{ if(window.scrollY>8) navbar.classList.add('nav-shrink'); else navbar.classList.remove('nav-shrink') });
+    burger.addEventListener('click',()=>{
+      navLinks.classList.toggle('show');
+      burger.classList.toggle('active');
+      burger.setAttribute('aria-expanded', navLinks.classList.contains('show'));
+    });
+    document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('show');burger.classList.remove('active')}));
+
+    // hero slider
+    const slides=[...document.querySelectorAll('.slide')];
+    let idx=0;
+    setInterval(()=>{
+      slides[idx].classList.remove('active');
+      idx=(idx+1)%slides.length;
+      slides[idx].classList.add('active');
+    },5000);
+
+    // contact form feedback
+    const form=document.getElementById('contactForm');
+    const toast=document.getElementById('toast');
+    const toastErr=document.getElementById('toastErr');
+    if(form){
+      form.addEventListener('submit',async e=>{
+        e.preventDefault();
+        const data=new FormData(form);
+        try{
+          const res=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'}});
+          if(res.ok){
+            toast.style.display='block';
+            setTimeout(()=>toast.style.display='none',3000);
+            form.reset();
+          }else{
+            toastErr.style.display='block';
+            setTimeout(()=>toastErr.style.display='none',3000);
+          }
+        }catch(err){
+          toastErr.style.display='block';
+          setTimeout(()=>toastErr.style.display='none',3000);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
